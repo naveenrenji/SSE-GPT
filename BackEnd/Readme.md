@@ -2,19 +2,19 @@ To set up and start the backend
 
 1. If not already existsing - create a virtual environment for your project:
 
-     python3 -m venv venv
+     python3 -m venv newenv
 
 2.  On Windows: 
 
-        venv\Scripts\activate
+        newenv\Scripts\activate
 
     On Unix or MacOS: 
     
-        source venv/bin/activate
+        source newenv/bin/activate
 
 3. Install Flask and Transformers libraries in your virtual environment: 
 
-     pip install flask transformers torch flask_cors
+     pip install flask transformers torch flask_cors pandas numpy
 
 4. Run your Flask app:
 
