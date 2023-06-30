@@ -14,7 +14,7 @@ To set up and start the backend
 
 3. Install Flask and Transformers libraries in your virtual environment: 
 
-     pip install flask transformers torch flask_cors pandas numpy
+     pip install flask transformers==4.29.2 torch flask_cors pandas numpy
 
 4. Run your Flask app:
 
