@@ -38,7 +38,7 @@ for line in txt_content:
 # defining the query sentences
 #query_sentences = ['obama was born in honolulu, hawaii', 'the president graduated from columbia university','obama is an american politician']
 
-query_sentence = ['Obama speaks to the media in Illinois, Chicago']
+query_sentences = ['Obama speaks to the media in Illinois, Chicago']
 #print ('len of sentences in query text: ', len(query_sentences))
 
 # === preparing pinecone and loading the model to create the embeddings
@@ -54,7 +54,7 @@ pc.init(api_key="bfe6ce12-d327-4243-a7c0-e8a955e1b3b3", environment="us-west1-gc
 
 active_indexes = pc.list_indexes()
 index_description = pc.describe_index(active_indexes[0])
-index_name = 'example-index'
+index_name = 'semanticsimilaritycomparison'
 
 # loading the model
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -107,7 +107,7 @@ for query_embedding, query_sentence in zip(query_embeddings, query_sentences):
     # printing the matched sentences and their scores
     for res in res.matches:
         print ("Matched sentence:", corpus_sentences[int(res.id)])
-        print("   --- score:", res.score)
+        print("  Score:", res.score)
 
 print('\nTime to evaluate the matching: {} mins'.format(round((time() - t) / 60, 4)))
 
