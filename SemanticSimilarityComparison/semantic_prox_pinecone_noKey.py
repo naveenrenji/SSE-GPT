@@ -38,7 +38,7 @@ for line in txt_content:
 # defining the query sentences
 #query_sentences = ['obama was born in honolulu, hawaii', 'the president graduated from columbia university','obama is an american politician']
 
-query_sentences = ['Obama speaks to the media in Illinois, Chicago']
+query_sentences = ['In the year 2008, after a tightly contested primary against Hillary Clinton and following the start of his political journey a year earlier, the Democratic Party nominated him for the presidency.']
 #print ('len of sentences in query text: ', len(query_sentences))
 
 # === preparing pinecone and loading the model to create the embeddings
@@ -46,7 +46,7 @@ query_sentences = ['Obama speaks to the media in Illinois, Chicago']
 pc.init(api_key="bfe6ce12-d327-4243-a7c0-e8a955e1b3b3", environment="us-west1-gcp-free")
 
 # # Create an index
-# pc.create_index(name="example-index", metric="cosine", dimension=1024, shards=1)
+#pc.create_index(name="semanticsimilaritycomparison", metric="euclidean", dimension=1024, shards=1)
 
 # # Initialize the index
 # index = pc.Index(index_name="example-index")
@@ -107,7 +107,7 @@ for query_embedding, query_sentence in zip(query_embeddings, query_sentences):
     # printing the matched sentences and their scores
     for res in res.matches:
         print ("Matched sentence:", corpus_sentences[int(res.id)])
-        print("  Score:", res.score)
+        print("Score:", res.score)
 
-print('\nTime to evaluate the matching: {} mins'.format(round((time() - t) / 60, 4)))
+print('Time to evaluate the matching: {} mins'.format(round((time() - t) / 60, 4)))
 

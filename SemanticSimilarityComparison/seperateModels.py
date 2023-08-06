@@ -8,6 +8,10 @@ from gensim.similarities import WmdSimilarity
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 import pinecone as pc
 from sentence_transformers import SentenceTransformer
+from datetime import datetime
+from time import time
+
+
 
 # Define the models, similarity metrics, and storage methods
 models = ['all-MiniLM-L6-v2', 'all-roberta-large-v1', 'word2vec']
@@ -16,7 +20,7 @@ storage_methods = ['pinecone', 'no_index']
 
 # Define your choice of model, storage, and similarity metric
 model_choice = 3  # Select between 1-3
-storage_choice = 1  # Select between 1-2
+storage_choice = 1 # Select between 1-2
 similarity_choice = 2  # Select between 1-3
 
 # Initialize the spacy tokenizer
@@ -30,7 +34,7 @@ with open('Barack_Obama.txt', 'r', encoding='utf8') as f:
 corpus_sentences = [spacy_tokenizer(sentence).text.split() for sentence in corpus.split('.')]
 
 # Define the query sentences and tokenize them
-query_sentences = [spacy_tokenizer(sentence).text.split() for sentence in ['Obama speaks to the media in Illinois, Chicago']]
+query_sentences = [spacy_tokenizer(sentence).text.split() for sentence in ['In the year 2008, after a tightly contested primary against Hillary Clinton and following the start of his political journey a year earlier, the Democratic Party nominated him for the presidency.']]
 
 # Initialize the model
 model_name = models[model_choice - 1]
@@ -54,7 +58,7 @@ if storage_method == 'pinecone':
     # Create a Pinecone index
     index_name = "semanticsimilaritycomparison"
     #sometimes after 1 run, comment the below line and run again. idk why but it works.
-    pc.create_index(name=index_name, metric=similarity_metrics[similarity_choice - 1], dimension=corpus_embeddings.shape[1])
+    #pc.create_index(name=index_name, metric=similarity_metrics[similarity_choice - 1], dimension=corpus_embeddings.shape[1], shards=1)
 
     # Initialize the index
     index = pc.Index(index_name=index_name)
@@ -69,15 +73,11 @@ if storage_method == 'pinecone':
 
 # Initialize the similarity metric
 similarity_metric = similarity_metrics[similarity_choice - 1]
-try:
-    # Calculate the similarity
-    if similarity_metric == 'cosine':
-        similarity = cosine_similarity(query_embeddings, corpus_embeddings)
-    elif similarity_metric == 'euclidean':
-        similarity = euclidean_distances(query_embeddings, corpus_embeddings)
-    elif similarity_metric == 'dotproduct':
-        similarity = np.dot(query_embeddings, corpus_embeddings.T)
 
+#start time 
+t = time()
+
+try:
     # If using Pinecone, query the index
     if storage_method == 'pinecone':
         for query_embedding in query_embeddings:
@@ -86,10 +86,17 @@ try:
             print(f"Model: {model_name}, Storage: {storage_method}, Similarity: {similarity_metric}")
             print(results)
             for match in results.matches:
-                print(f"Matched sentence: {' '.join(corpus_sentences[int(match.id)])}, Score: {match.score}")
+                print(f"Matched sentence: {' '.join(corpus_sentences[int(match.id)])}.\nScore: {match.score}")
 
     # If not using Pinecone, print the top 3 most similar sentences for each query
     else:
+        # Calculate the similarity
+        if similarity_metric == 'cosine':
+            similarity = cosine_similarity(query_embeddings, corpus_embeddings)
+        elif similarity_metric == 'euclidean':
+            similarity = euclidean_distances(query_embeddings, corpus_embeddings)
+        elif similarity_metric == 'dotproduct':
+            similarity = np.dot(query_embeddings, corpus_embeddings.T)
         top_k = 3
         for i, query_embedding in enumerate(query_embeddings):
             print("Printing the local one")            
@@ -99,7 +106,9 @@ try:
             # Print the results
             print(f"Model: {model_name}, Storage: {storage_method}, Similarity: {similarity_metric}")
             for j in range(top_k):
-                print(f"Matched sentence: {' '.join(corpus_sentences[top_k_indices[j]])}, Score: {top_k_similarities[j]}")
+                print(f"Matched sentence: {' '.join(corpus_sentences[top_k_indices[-j-1]])}.\nScore: {top_k_similarities[-j-1]}")
+
+    print('Time to evaluate the matching: {} seconds'.format(round(time() - t, 4)))
 
 except Exception as e:
     print(f"An error occurred while calculating the {similarity_metric} similarity: {e}")
