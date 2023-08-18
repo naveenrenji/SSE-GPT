@@ -19,9 +19,9 @@ similarity_metrics = ['cosine', 'euclidean', 'dotproduct']
 storage_methods = ['pinecone', 'no_index']
 
 # Define your choice of model, storage, and similarity metric
-model_choice = 3  # Select between 1-3
+model_choice = 2  # Select between 1-3
 storage_choice = 1 # Select between 1-2
-similarity_choice = 2  # Select between 1-3
+similarity_choice = 1  # Select between 1-3
 
 # Initialize the spacy tokenizer
 spacy_tokenizer = spacy.load('en_core_web_sm')
@@ -56,7 +56,7 @@ if storage_method == 'pinecone':
     pc.init(api_key="bfe6ce12-d327-4243-a7c0-e8a955e1b3b3", environment="us-west1-gcp-free")
 
     # Create a Pinecone index
-    index_name = "semanticsimilaritycomparison"
+    index_name = "ssegpt"
     #sometimes after 1 run, comment the below line and run again. idk why but it works.
     #pc.create_index(name=index_name, metric=similarity_metrics[similarity_choice - 1], dimension=corpus_embeddings.shape[1], shards=1)
 
@@ -117,3 +117,5 @@ except Exception as e:
 #if storage_method == 'pinecone':
     #pc.deinit()
     #pc.delete_index(index_name)
+
+

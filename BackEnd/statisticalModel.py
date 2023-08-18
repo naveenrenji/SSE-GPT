@@ -33,7 +33,6 @@ nlp = pipeline("question-answering", model="bert-large-uncased-whole-word-maskin
 
 context = """
 Naveen is a graduate research student conducting reasearch on LLMs and experimenting with different models.
-Naveen loves mansi.
 We have a dataset and we can perform several operations on this dataset. 
 We can calculate the mean which is the average or avg value of the dataset. 
 We can also calculate the median which is the middle value of the dataset. 

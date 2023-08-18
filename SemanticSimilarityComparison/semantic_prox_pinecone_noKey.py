@@ -46,7 +46,7 @@ query_sentences = ['In the year 2008, after a tightly contested primary against 
 pc.init(api_key="bfe6ce12-d327-4243-a7c0-e8a955e1b3b3", environment="us-west1-gcp-free")
 
 # # Create an index
-#pc.create_index(name="semanticsimilaritycomparison", metric="euclidean", dimension=1024, shards=1)
+#pc.create_index(name="ssegpt", metric="cosine", dimension=1024, shards=1)
 
 # # Initialize the index
 # index = pc.Index(index_name="example-index")
@@ -54,7 +54,7 @@ pc.init(api_key="bfe6ce12-d327-4243-a7c0-e8a955e1b3b3", environment="us-west1-gc
 
 active_indexes = pc.list_indexes()
 index_description = pc.describe_index(active_indexes[0])
-index_name = 'semanticsimilaritycomparison'
+index_name = 'ssegpt'
 
 # loading the model
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
