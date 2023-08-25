@@ -36,9 +36,9 @@ else:
     index = pc.Index(index_name=index_name)
 
 # Function to query the Pinecone index and retrieve the answer
-def get_answer():
+def get_answer(query):
     while True:
-        query = input("You: ")
+        #query = input("You: ")
         query_embedding = model.encode([query], show_progress_bar=True).tolist()[0] # Get the first element
         res = index.query(vector=query_embedding, top_k=1, include_values=True)
         match = res.matches[0]
@@ -46,15 +46,18 @@ def get_answer():
         if match.score > 0.7:
             answer = df['answer'][int(match.id)]
             print(f"Query: {query} || Matched question: {matched_question} || Answer: {answer} ||")
-        else:
-            print(f"There was no direct match with existing questions. The closest match was : {matched_question} || \n with a score of  : {match.score} ")
+            return answer
 
+        else:
+            print(f"There was no direct match with existing questions")
+            #The closest match was : {matched_question} || \n with a score of  : {match.score} ")
+            return ''
 # Example 
 # Can I present my code on jupyter notebook for the presentation?
 # Can I please have the EM 624 midterm scheduled to a different time as well?
 # My outlook isnt working, can i send through canvas?
-get_answer()
+#get_answer()
 
 
 # Deinitialize Pinecone
-pc.deinit()
+#pc.deinit()
