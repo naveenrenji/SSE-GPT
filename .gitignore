@@ -5,3 +5,6 @@ fine_tuned_model
 results
 cached_*
 SSEGPT/.DS_Store
+training data
+Kunal/Copy_of_MPT30B_RetrievalQ&A_final_version.ipynb
+Kunal/Trained_LLama13B_RetrievalQ&A_v3_CorpusChange.ipynb
