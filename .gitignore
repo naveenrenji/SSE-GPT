@@ -4,3 +4,4 @@ __pycache__/
 fine_tuned_model
 results
 cached_*
+SSEGPT/.DS_Store
