@@ -19,8 +19,8 @@ similarity_metrics = ['cosine', 'euclidean', 'dotproduct']
 storage_methods = ['pinecone', 'no_index']
 
 # Define your choice of model, storage, and similarity metric
-model_choice = 2  # Select between 1-3
-storage_choice = 1 # Select between 1-2
+model_choice = 1  # Select between 1-3
+storage_choice = 2 # Select between 1-2
 similarity_choice = 1  # Select between 1-3
 
 # Initialize the spacy tokenizer
@@ -81,7 +81,7 @@ try:
     # If using Pinecone, query the index
     if storage_method == 'pinecone':
         for query_embedding in query_embeddings:
-            results = index.query(query_embedding.tolist(), top_k=3)  # Converted to list
+            results = index.query(query_embedding.tolist(), top_k=5)  # Converted to list
             # Print the results
             print(f"Model: {model_name}, Storage: {storage_method}, Similarity: {similarity_metric}")
             print(results)

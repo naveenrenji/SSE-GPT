@@ -25,7 +25,7 @@ index_name = 'qna'
 # Check if the index with the given name already exists
 if index_name not in pc.list_indexes():
     # Create a Pinecone index
-    pc.create_index(name=index_name, metric="cosine", dimension=len(question_embeddings[0]))
+    #pc.create_index(name=index_name, metric="cosine", dimension=len(question_embeddings[0]))
     index = pc.Index(index_name=index_name)
 
     # Add the question embeddings to the Pinecone index
@@ -41,13 +41,13 @@ def get_answer(query):
         #query = input("You: ")
         query_embedding = model.encode([query], show_progress_bar=True).tolist()[0] # Get the first element
         res = index.query(vector=query_embedding, top_k=1, include_values=True)
-        match = res.matches[0]
-        matched_question = questions[int(match.id)] # Update matched_question here
-        if match.score > 0.7:
-            answer = df['answer'][int(match.id)]
-            print(f"Query: {query} || Matched question: {matched_question} || Answer: {answer} ||")
-            return answer
-
+        if len(res.matches)>0:
+            match = res.matches[0]
+            matched_question = questions[int(match.id)] # Update matched_question here
+            if match.score > 0.7:
+                answer = df['answer'][int(match.id)]
+                print(f"Query: {query} || Matched question: {matched_question} || Answer: {answer} ||")
+                return answer
         else:
             print(f"There was no direct match with existing questions")
             #The closest match was : {matched_question} || \n with a score of  : {match.score} ")

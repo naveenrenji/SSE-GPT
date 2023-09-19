@@ -8,7 +8,7 @@ def main():
         # Passing the input to the stage 1 component
         data = get_answer(user_input)
 
-        # If the response was 0, it means we need to go to the stage 2 component
+        # If the response was '', there was no match at stage 1, hence -> stage 2 component
         if data == '':
             # data = KUNAL_MODEL  # Implement your model function here
             pass  # Placeholder for stage 2 component

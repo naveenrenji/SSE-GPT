@@ -1,7 +1,7 @@
 from transformers import pipeline
 
 def response_generator(data):
-    selected_model = 'bigscience/bloom-560m'  # You can change this to the desired model, like Llama
+    selected_model = 'bigscience/bloom-560m'  # You can change this to the another model, like Llama
     token_id = 50256  #  token ID for the padding token
     out_max_length = 20  # Maximum length of the generated text
 
