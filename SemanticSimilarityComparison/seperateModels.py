@@ -97,7 +97,7 @@ try:
             similarity = euclidean_distances(query_embeddings, corpus_embeddings)
         elif similarity_metric == 'dotproduct':
             similarity = np.dot(query_embeddings, corpus_embeddings.T)
-        top_k = 3
+        top_k = 7
         for i, query_embedding in enumerate(query_embeddings):
             print("Printing the local one")            
             top_k_indices = np.argsort(similarity[i])[-top_k:]
