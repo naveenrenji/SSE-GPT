@@ -45,7 +45,7 @@ function ChatBot() {
       let messagedata = [
         {
           sender: "Carlo Lipizzi",
-          content: "I am too tired right now, can we talk later?",
+          content: "I don't know how to respond to that, please try another question. ",
         },
       ];
       if (response.data.response) {
@@ -58,6 +58,14 @@ function ChatBot() {
             sender: "Carlo Lipizzi",
             content: response.data.response,
           },
+        ];
+      }
+      else{
+        messagedata = [
+          {
+            sender: "user",
+            content: input,
+          }, ...messagedata
         ];
       }
 
