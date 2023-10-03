@@ -1,4 +1,4 @@
-from Backend.stageTwo.dataEmbedding import get_model_and_index
+from .dataEmbedding import get_model_and_index
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from time import time
@@ -22,7 +22,7 @@ def get_SSE_results(query):
         
         if len(res['ids'][0]) > 0:
             for i, score in zip(res['ids'][0], res['scores'][0]):
-                if score > 0.6:
+                if score > 0.5:
                     matched_sentence = corpus_sentences[int(i)]
                     matched_sentences.append(matched_sentence)
                     
@@ -38,21 +38,24 @@ def get_SSE_results(query):
         top_k = 20
         top_k_indices = np.argsort(similarity)[-top_k:]
         top_k_similarities = similarity[top_k_indices]
-        
+
         matched_sentences = []
-        
-        print(f"Model: {model}, Storage: {storage}, Similarity: cosine")
+
         for j in range(top_k):
-            sentence = ' '.join(corpus_sentences[top_k_indices[-j-1]])  # Assuming corpus_sentences is a list of lists
-            print(f"Matched sentence: {sentence}.\nScore: {top_k_similarities[-j-1]}")
-            matched_sentences.append(sentence)
-        
-        concatenated_sentences = ' '.join(matched_sentences)
-        
+            if top_k_similarities[-j-1] > 0.5:
+                sentence = ' '.join(corpus_sentences[top_k_indices[-j-1]])  # Assuming corpus_sentences is a list of lists
+                matched_sentences.append(sentence)
+
+        if len(matched_sentences) == 0:
+            print('No matched sentences with a score above 0.4.')
+            concatenated_sentences = ''
+        else:
+            concatenated_sentences = ' '.join(matched_sentences)
+
         print('Time to evaluate the matching:', round(time() - t, 4), 'seconds')
-        
+
         return concatenated_sentences
 
 # Example usage
-result = get_SSE_results("what is the difference between users and programmers")
-print("Concatenated Sentences:", result)
+# result = get_SSE_results("what is the difference between users and programmers")
+# print("Concatenated Sentences:", result)

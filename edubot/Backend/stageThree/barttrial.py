@@ -1,4 +1,5 @@
 from transformers import BartTokenizer, BartForConditionalGeneration
+from time import time
 
 # Load the fine-tuned BART model and tokenizer
 tokenizer = BartTokenizer.from_pretrained('facebook/bart-large')
@@ -16,6 +17,7 @@ def generate_response(text_information, user_query):
       The generated response text.
     """
 
+    t = time()
     # Combine text information and user query to form the input
     input_text = f"The information I have is: '{text_information}'. Now, to your question: '{user_query}'"
 
@@ -27,15 +29,17 @@ def generate_response(text_information, user_query):
 
     # Decode and return the response text
     response_text = tokenizer.decode(response[0], skip_special_tokens=True)
+    
+    print('Time to generate the response:', round(time() - t, 4), 'seconds')
 
     return response_text
 
-# Example usage:
-text_information = "The meaning of life is to be good and do good, that is the key!"
-user_query = "What is the meaning of life?"
+# # Example usage:
+# text_information = "The meaning of life is to be good and do good, that is the key!"
+# user_query = "What is the meaning of life?"
 
-# Generate the response using the BART model
-response = generate_response(text_information, user_query)
+# # Generate the response using the BART model
+# response = generate_response(text_information, user_query)
 
 # Print the response
-print(response)
+#print(response)

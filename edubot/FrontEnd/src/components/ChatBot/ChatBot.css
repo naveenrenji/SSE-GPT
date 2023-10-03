@@ -1,5 +1,5 @@
 .chat-container {
-  width: 100vw;
+  width: 10s0vw;
   height: 100vh;
   padding: 1em;
   box-sizing: border-box;
@@ -30,15 +30,22 @@
 .chat-messages {
   overflow-y: auto;
   flex-grow: 1;
-  margin: 1em 0;
+  margin: auto;  /* Center the form */
   border-radius: 10px;
   background-color: #0f3460;
+  width: 85%;  /* Set the width to 80% of the parent container */
+
 }
 
 .chat-message-wrapper {
   display: flex;
   align-items: flex-end;
   margin: 1em;
+
+  display: flex;
+  margin: auto;  /* Center the form */
+  width: 98%;  /* Set the width to 80% of the parent container */
+
 }
 
 .bot-avatar {
@@ -68,8 +75,12 @@
 }
 
 .chat-form {
+  padding-top: 2dvh;
   display: flex;
+  margin: auto;  /* Center the form */
+  width: 80%;  /* Set the width to 80% of the parent container */
 }
+
 
 .chat-input {
   flex-grow: 1;
@@ -144,3 +155,49 @@
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+
+.loading-animation {
+  padding: 2em;
+  text-align: center;
+  font-size: 1em;
+  color: #fff;
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+/* 
+.loading-animation div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: loading-animation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+
+.loading-animation div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.loading-animation div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.loading-animation div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes loading-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} */
