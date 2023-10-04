@@ -22,7 +22,7 @@ def get_SSE_results(query):
         
         if len(res['ids'][0]) > 0:
             for i, score in zip(res['ids'][0], res['scores'][0]):
-                if score > 0.5:
+                if score > 0.4:
                     matched_sentence = corpus_sentences[int(i)]
                     matched_sentences.append(matched_sentence)
                     
@@ -42,7 +42,7 @@ def get_SSE_results(query):
         matched_sentences = []
 
         for j in range(top_k):
-            if top_k_similarities[-j-1] > 0.5:
+            if top_k_similarities[-j-1] > 0.4:
                 sentence = ' '.join(corpus_sentences[top_k_indices[-j-1]])  # Assuming corpus_sentences is a list of lists
                 matched_sentences.append(sentence)
 

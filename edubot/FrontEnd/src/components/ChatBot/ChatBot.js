@@ -45,7 +45,8 @@ function ChatBot() {
       let messagedata = [
         {
           sender: "Carlo Lipizzi",
-          content: "I don't know how to respond to that, please try another question. ",
+          content:
+            "I don't know how to respond to that, please try another question. ",
         },
       ];
       if (response.data.response) {
@@ -59,13 +60,13 @@ function ChatBot() {
             content: response.data.response,
           },
         ];
-      }
-      else{
+      } else {
         messagedata = [
           {
             sender: "user",
             content: input,
-          }, ...messagedata
+          },
+          ...messagedata,
         ];
       }
 
@@ -83,16 +84,6 @@ function ChatBot() {
   return (
     <div className="chat-container">
       <h1 className="chat-title">SSE - EduBot</h1>
-      <h2 className="chat-subtitle">
-        Your Advanced Secure and Scalable Chatbot Ecosystem
-      </h2>
-      <div className="clear-chat-button">
-        {messages.length > 0 && (
-          <button className="clear-button" onClick={clearChat}>
-            Clear Chat
-          </button>
-        )}
-      </div>
       <div className="chat-messages">
         {messages.map((message, index) => (
           <div className={`chat-message-wrapper ${message.sender}`} key={index}>
@@ -107,30 +98,49 @@ function ChatBot() {
         {isLoading && (
           <div className="loading-animation">Generating response...</div>
         )}
-        {/* {isLoading && (
-          <div className="loading-animation">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        )} */}
 
         <div ref={messagesEndRef} />
       </div>
       {!isLoading && (
-      <form onSubmit={sendMessage} className="chat-form">
-        <input
-          className="chat-input"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter your message"
-          disabled={isLoading} // Disable input during loading
-        />
-        <button className="chat-button" type="submit" disabled={isLoading}>
-          Submit
-        </button>
-      </form>)}
+        <div className="chat-form-wrapper">
+          {messages.length > 0 && (
+            <button className="clear-button" onClick={clearChat}>
+              Clear
+            </button>
+          )}
+          <form onSubmit={sendMessage} className="chat-form">
+            {/* <input
+            className="chat-input"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Enter your message"
+            disabled={isLoading}
+          /> */}
+            <textarea
+              className="chat-input"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Enter your message"
+              disabled={isLoading}
+              rows={Math.min(
+                10,
+                input.split("\n").length + Math.floor(input.length / 150)
+              )}
+            />
+
+            <button type="submit" className="send-button" disabled={isLoading}>
+              <span className="send-symbol">➤</span>
+            </button>
+          </form>
+        </div>
+      )}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
+      <div className="disclaimer">
+        <p>
+          This is a prototype by the SSE team under Dr Carlo Lipizzi. All information provided should be independently
+          verified. Use at your own risk.
+        </p>
+      </div>
     </div>
   );
 }
