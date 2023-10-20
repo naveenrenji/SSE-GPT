@@ -6,16 +6,6 @@ tokenizer = BartTokenizer.from_pretrained('facebook/bart-large')
 model = BartForConditionalGeneration.from_pretrained('facebook/bart-large')
 
 def generate_response(text_information, user_query):
-    """
-    Generates a response using the BART model.
-
-    Args:
-      text_information: The text information from stage 1 or stage 2.
-      user_query: The user query.
-
-    Returns:
-      The generated response text.
-    """
 
     t = time()
     # Combine text information and user query to form the input
@@ -34,9 +24,7 @@ def generate_response(text_information, user_query):
 
     return response_text
 
-# # Example usage:
-# text_information = "The meaning of life is to be good and do good, that is the key!"
-# user_query = "What is the meaning of life?"
+# # Example:
 
 # # Generate the response using the BART model
 # response = generate_response(text_information, user_query)

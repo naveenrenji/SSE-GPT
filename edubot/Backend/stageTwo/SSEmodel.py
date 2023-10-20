@@ -42,20 +42,22 @@ def get_SSE_results(query):
         matched_sentences = []
 
         for j in range(top_k):
-            if top_k_similarities[-j-1] > 0.4:
+            if top_k_similarities[-j-1] > 0.5:
                 sentence = ' '.join(corpus_sentences[top_k_indices[-j-1]])  # Assuming corpus_sentences is a list of lists
                 matched_sentences.append(sentence)
 
         if len(matched_sentences) == 0:
-            print('No matched sentences with a score above 0.4.')
-            concatenated_sentences = ''
+            print('No matched sentences with a score above 0.5.')
+            concatenated_sentences = 'not found'
         else:
             concatenated_sentences = ' '.join(matched_sentences)
 
         print('Time to evaluate the matching:', round(time() - t, 4), 'seconds')
+        print('the matches sentences are : ',concatenated_sentences)
 
         return concatenated_sentences
 
 # Example usage
-# result = get_SSE_results("what is the difference between users and programmers")
-# print("Concatenated Sentences:", result)
+#result = get_SSE_results("what is the difference between users and programmers")
+#result = get_SSE_results("what do you think about terrosrists and murderers?")
+#print("Concatenated Sentences:", result)

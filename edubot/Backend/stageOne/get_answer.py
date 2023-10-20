@@ -1,4 +1,4 @@
-from .data_init_and_pinecone import get_model_and_index
+from stageOne.data_init_and_pinecone import get_model_and_index
 
 model, index, questions, df = get_model_and_index()
 
@@ -8,17 +8,17 @@ def get_answer(query):
         if len(res.matches) > 0:
             match = res.matches[0]
             matched_question = questions[int(match.id)]
-            if match.score > 0.6:
+            if match.score > 0.5:
                 answer = df['answer'][int(match.id)]
                 print(f"Query: {query} || Matched question: {matched_question} || Answer: {answer} ||")
                 return answer
             else:
                 print(f"There was no direct match with existing questions")
-                return ''
+                return 'not found'
 
         else:
             print(f"There was no direct match with existing questions")
-            return ''
+            return 'not found'
 
 
 # Example 

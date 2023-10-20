@@ -47,13 +47,16 @@ index_name = 'qna'
 # Check if the index with the given name already exists
 if index_name not in pc.list_indexes():
     # Create a Pinecone index
-    pc.create_index(name=index_name, metric="cosine", dimension=len(question_embeddings[0]))
+    #pc.create_index(name=index_name, metric="cosine", dimension=len(question_embeddings[0]))
     index = pc.Index(index_name=index_name)
     ids = [str(i) for i in range(len(question_embeddings))]
     data = list(zip(ids, question_embeddings))
     index.upsert(data)
 else:
     index = pc.Index(index_name=index_name)
+    ids = [str(i) for i in range(len(question_embeddings))]
+    data = list(zip(ids, question_embeddings))
+    index.upsert(data)
 
 def get_model_and_index():
     return model, index, questions, df
