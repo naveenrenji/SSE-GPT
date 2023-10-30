@@ -75,13 +75,20 @@
   text-align: left;
 }
 
+.chat-form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  margin: auto; 
+}
+
 .chat-form {
   padding-top: 2dvh;
   display: flex;
-  margin: auto;  /* Center the form */
-  width: 70%;  /* Set the width to 80% of the parent container */
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  flex-grow: 1;
 }
 
 
@@ -184,21 +191,6 @@
 
 .send-symbol {
   font-size: 1.2em;
-}
-
-
-.chat-form-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.chat-form {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-grow: 1;
 }
 
 .send-symbol {
