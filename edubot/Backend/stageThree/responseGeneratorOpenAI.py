@@ -2,50 +2,57 @@ import openai
 
 openai.api_key = "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"
 
+# Initialize a conversation history list
+conversation_history = []
+
 def response_generator(question, context):
-    openai.api_key = "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"
+    global conversation_history
+    
+    # Append the new user's question to the conversation history
+    conversation_history.append({
+        "role": "user",
+        "content": f"Question: {question}\nContext: {context}"
+    })
 
-    # Combine question and context into one input string
-    input_text = f"Question: {question}\nContext: {context}"
+    # Ensure that only the last 5 messages are kept
+    if len(conversation_history) > 10:
+        conversation_history = conversation_history[-10:]
 
-    # # Use the GPT-3.5 API to generate a response
-    # response = openai.Completion.create(
-    #     engine="text-davinci-003",  # You can choose other engines as well
-    #     prompt=input_text,
-    #     max_tokens=150,  # You can adjust the max tokens as needed
-    #     n=1,
-    #     stop=None,
-    #     temperature=1.0
-    # )
-
+    # The system message that defines the behavior of the chatbot
+    system_message = {
+        "role": "system",
+        "content": "You are a professor who loves his students and is very empathetic, wise, and knowledgeable. You will respond only with information given in the context or the chat history, whichever is relevant, but respond directly to the query without mentioning the context. If the context is empty, you will say that you do not know the answer to that yet. Do not hallucinate and give extra information."
+    }
+    
+    # Use the GPT-4 API to generate a response, including the system message and conversation history
     response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
-      messages=[
-        {
-          "role": "system",
-          "content": "you are Professor who loves his students and is very empathetic, wise and knowledgeable. You will respond only with information given in the context, if the context is empty, you will say that you do not know the answer to that yet. Do not hallucinate and give extra information."
-        },
-        {
-          "role": "user",
-          "content": input_text
-        },
-      ],
-      temperature=1,
-      max_tokens=100,
-      top_p=1,
-      frequency_penalty=0,
-      presence_penalty=0,
-      stop=["\n"]
+        model="gpt-4",
+        messages=[system_message] + conversation_history,
+        temperature=1,
+        max_tokens=250,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+        stop=["\n"]
     )
-
-
-    # Extract and return the generated text from the API response
+    
+    # Extract the response text
     response_text = response['choices'][0]['message']['content'].strip()
+    
+    # Append the model's response to the conversation history
+    conversation_history.append({
+        "role": "assistant",
+        "content": response_text
+    })
+
+    # Ensure that only the last 5 messages are kept after the response is added
+    if len(conversation_history) > 10:
+        conversation_history = conversation_history[-10:]
 
     return response_text
 
 # Example usage:
 #question = "Who is Naveen?"
-#context = "Naveen is a graduate student at stevens institute of technology who is very interested in AI. Naveen is from Bahrain, a small island in the Middle East but his homeland is Kerala, India"
+#context = "Naveen is a graduate student at Stevens Institute of Technology who is very interested in AI. Naveen is from Bahrain, a small island in the Middle East but his homeland is Kerala, India"
 
 #print(response_generator(question, context))

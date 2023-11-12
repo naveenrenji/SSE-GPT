@@ -16,8 +16,9 @@ def response_generator(question, context):
 
     # Create tokens
     tokens = pegasus_tokenizer(input_text, truncation=True, padding="longest", return_tensors="pt")
+    
     # Summarize text
-    encoded_summary = pegasus_model.generate(**tokens)
+    #encoded_summary = pegasus_model.generate(**tokens)
 
     # Define summarization pipeline 
     summarizer = pipeline(

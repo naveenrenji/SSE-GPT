@@ -126,6 +126,12 @@ function ChatBot() {
                 10,
                 input.split("\n").length + Math.floor(input.length / 150)
               )}
+              onKeyPress={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  sendMessage(e);
+                }
+              }}
             />
 
             <button type="submit" className="send-button" disabled={isLoading}>
@@ -137,8 +143,8 @@ function ChatBot() {
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       <div className="disclaimer">
         <p>
-          This is a prototype by the SSE team under Dr Carlo Lipizzi. All information provided should be independently
-          verified. Use at your own risk.
+          This is a prototype by the SSE team under Dr Carlo Lipizzi. All
+          information provided should be independently verified.
         </p>
       </div>
     </div>
