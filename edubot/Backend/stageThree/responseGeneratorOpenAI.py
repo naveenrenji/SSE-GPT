@@ -1,30 +1,24 @@
 import openai
 
 openai.api_key = "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"
-
-# Initialize a conversation history list
 conversation_history = []
 
 def response_generator(question, context):
     global conversation_history
     
-    # Append the new user's question to the conversation history
     conversation_history.append({
         "role": "user",
         "content": f"Question: {question}\nContext: {context}"
     })
 
-    # Ensure that only the last 5 messages are kept
     if len(conversation_history) > 10:
         conversation_history = conversation_history[-10:]
 
-    # The system message that defines the behavior of the chatbot
     system_message = {
         "role": "system",
         "content": "You are a professor who loves his students and is very empathetic, wise, and knowledgeable. You will respond only with information given in the context or the chat history, whichever is relevant, but respond directly to the query without mentioning the context. If the context is empty, you will say that you do not know the answer to that yet. Do not hallucinate and give extra information."
     }
     
-    # Use the GPT-4 API to generate a response, including the system message and conversation history
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=[system_message] + conversation_history,
