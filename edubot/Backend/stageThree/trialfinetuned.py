@@ -2,7 +2,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModelForCausalLM, PeftConfig
 
 def load_model():
-    model_id = "kings-crown/EM624_QA_Full"
+    model_id = "kings-crown/EM624_QA_Multi"
     base_model_id = "meta-llama/Llama-2-13b-chat-hf"
     access_token = "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"
     base_model = AutoModelForCausalLM.from_pretrained(base_model_id, use_auth_token=access_token)
