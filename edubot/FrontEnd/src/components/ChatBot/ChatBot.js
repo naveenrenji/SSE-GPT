@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./ChatBot.css";
 import axios from "axios";
-import botAvatar from "../../carloavatar.jpeg"; // Import your bot avatar image here
+// import botAvatar from "../../carloavatar.jpeg"; 
+import botAvatar from "../../VeritasMan.png"; 
 
 function ChatBot() {
   const [messages, setMessages] = useState([]);
@@ -44,7 +45,8 @@ function ChatBot() {
       setIsLoading(false); // Stop loading animation
       let messagedata = [
         {
-          sender: "Carlo Lipizzi",
+          // sender: "Carlo Lipizzi",
+          sender: "Veritasense",
           content:
             "I don't know how to respond to that, please try another question. ",
         },
@@ -56,7 +58,8 @@ function ChatBot() {
             content: input,
           },
           {
-            sender: "Carlo Lipizzi",
+            // sender: "Carlo Lipizzi",
+            sender: "Veritasense",
             content: response.data.response,
           },
         ];
@@ -87,7 +90,10 @@ function ChatBot() {
       <div className="chat-messages">
         {messages.map((message, index) => (
           <div className={`chat-message-wrapper ${message.sender}`} key={index}>
-            {message.sender === "Carlo Lipizzi" && (
+            {/* {message.sender === "Carlo Lipizzi" && (
+              <img src={botAvatar} alt="Bot Avatar" className="bot-avatar" />
+            )} */}
+            {message.sender === "Veritasense" && (
               <img src={botAvatar} alt="Bot Avatar" className="bot-avatar" />
             )}
             <p className={`chat-message ${message.sender}`}>
@@ -143,8 +149,8 @@ function ChatBot() {
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       <div className="disclaimer">
         <p>
-          This is a prototype by the SSE team under Dr Carlo Lipizzi. All
-          information provided should be independently verified.
+          This is just a prototype, all
+          information must be independently verified.
         </p>
       </div>
     </div>

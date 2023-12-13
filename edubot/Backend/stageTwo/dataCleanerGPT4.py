@@ -49,9 +49,9 @@ def save_to_csv(data, file_name):
                     writer.writerow(row.split('|'))
 
 def main():
-    file_path = 'sseData.txt'  # Replace with your file path
-    api_key = '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'  # Replace with your API key
-    chunk_size = 50  # Define the number of sentences per chunk
+    file_path = 'sseData.txt' 
+    api_key = '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'  
+    chunk_size = 50 
 
     chunks = read_text_file(file_path, chunk_size)
     processed_data = process_chunks(chunks, api_key)
