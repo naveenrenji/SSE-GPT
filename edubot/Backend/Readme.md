@@ -14,7 +14,7 @@ To set up and start the backend
 
 3. Install libraries in your virtual environment: 
 
-     pip install flask transformers==4.29.2 torch flask_cors pandas numpy pinecone-io sentence_transformers spacy pinecone-client==2.2.2
+     pip install -r requirements.txt
 
      python -m spacy download en_core_web_sm
 
