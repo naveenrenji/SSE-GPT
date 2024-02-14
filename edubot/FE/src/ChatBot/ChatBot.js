@@ -2,9 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import "./ChatBot.css";
 import axios from "axios";
 // import botAvatar from "../../carloavatar.jpeg"; 
-import botAvatar from "../../VeritasMan.png"; 
+import botAvatar from "./VeritasMan.png"; 
+
+import { RequireAuth, useAuthUser } from "react-auth-kit";
 
 function ChatBot() {
+  const auth = useAuthUser();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");

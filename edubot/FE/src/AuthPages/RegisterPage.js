@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 
-import "../App.css";
+import "./Auth.css";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -11,6 +11,8 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
+
+  let url = process.env.REACT_APP_API_ENDPOINT;
 
   const navigate = useNavigate();
 
@@ -68,14 +70,11 @@ export default function SignUpPage() {
         password: password,
       };
       console.log(body);
-      let { data } = await axios.post(
-        `http://localhost:5000/auth/signup`,
-        body
-      );
-      if (!Object.keys(data).includes("error")) {
+      let { data } = await axios.post(`${url}/auth/signup`, body);
+      if (!Object.keys(data).includes("Error")) {
         navigate("/login");
       } else {
-        alert(data["error"]);
+        alert(data["Error"]);
       }
     } catch (e) {
       // const errorCode = error.code;
@@ -85,14 +84,13 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="text-center m-5-auto">
-      <h2>Create an account</h2>
-      {/* <Form></Form> */}
+    <div className="text-center m-5-auto login-form">
       <form action="/home">
         <p>
           <label>Username</label>
           <br />
           <input
+            className="form-control"
             type="text"
             name="first_name"
             required
@@ -103,6 +101,7 @@ export default function SignUpPage() {
           <label>Email address</label>
           <br />
           <input
+            className="form-control"
             type="email"
             name="email"
             required
@@ -113,6 +112,7 @@ export default function SignUpPage() {
           <label>Password</label>
           <br />
           <input
+            className="form-control"
             type="password"
             name="password"
             required
@@ -120,14 +120,14 @@ export default function SignUpPage() {
           />
         </p>
         <p>
-          <button id="sub_btn" onClick={onSignup}>
+          <button id="sub_btn" className="btn btn-primary" onClick={onSignup}>
             Register
           </button>
         </p>
       </form>
       <footer>
         <p>
-          <Link to="/">Back to Homepage</Link>.
+          Already have an account? <Link to="/login">Login here</Link>.
         </p>
       </footer>
     </div>

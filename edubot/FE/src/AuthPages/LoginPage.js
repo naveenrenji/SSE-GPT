@@ -1,15 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
-import { UserContext } from "../context/userContext";
-import "../App.css";
+
+import "./Auth.css";
+
+import { useSignIn } from "react-auth-kit";
 
 export default function SignInPage() {
-  const { user, setUser, token, authenticated, setAuthenticated } =
-    useContext(UserContext);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  let url = process.env.REACT_APP_API_ENDPOINT;
+
+  const signIn = useSignIn();
 
   const navigate = useNavigate();
 
@@ -43,16 +46,23 @@ export default function SignInPage() {
         email: email,
         password: password,
       };
-      let { data } = await axios.post(`http://localhost:5000/auth/login`, body);
-      if (!Object.keys(data).includes("error")) {
-        setUser(data);
-        setAuthenticated(true);
+      console.log(process.env);
+      let { data } = await axios.post(`${url}/auth/login`, body);
+      if (!Object.keys(data).includes("Error")) {
         setEmail("");
         setPassword("");
 
-        navigate("/home");
+        signIn({
+          token: data.session_token,
+          expiresIn: 3600,
+          tokenType: "Bearer",
+          authState: { name: data.name, email: data.email },
+        });
+
+        navigate("/chatbot");
+        window.location.reload();
       } else {
-        console.log(data);
+        alert(data["Error"]);
         setEmail("");
         setPassword("");
       }
@@ -60,16 +70,14 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="text-center m-5-auto">
-      {authenticated ? <Navigate to="/home" /> : null}
+    <div className="text-center m-5-auto login-form">
       <div>
-        <h2>Sign in</h2>
-        <p>{user.name}</p>
         <form>
           <p>
             <label>Email address</label>
             <br />
             <input
+              className="form-control"
               type="text"
               name="email"
               required
@@ -80,6 +88,7 @@ export default function SignInPage() {
             <label>Password</label>
             <br />
             <input
+              className="form-control"
               type="password"
               name="password"
               required
@@ -88,7 +97,12 @@ export default function SignInPage() {
           </p>
 
           <p>
-            <button id="sub_btn" onClick={onSignIn} type="submit">
+            <button
+              id="sub_btn"
+              className="btn btn-primary"
+              onClick={onSignIn}
+              type="submit"
+            >
               Login
             </button>
           </p>
@@ -96,10 +110,10 @@ export default function SignInPage() {
 
         <footer>
           <p>
-            First time? <Link to="/register">Create an account</Link>.
+            First time here? <Link to="/register">Create an account</Link>
           </p>
           <p>
-            <Link to="/">Back to Homepage</Link>.
+            <Link to="/">Back to Homepage</Link>
           </p>
         </footer>
       </div>

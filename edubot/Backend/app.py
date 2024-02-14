@@ -2,13 +2,11 @@ import sys
 from flask import Flask, request, jsonify, session
 from chatbot import get_bot_response  
 from flask_cors import CORS
-from auth import auth, bcrypt, mongo
 from pymongo import MongoClient 
 from flask_session import Session
 from flask_bcrypt import Bcrypt
 import os
 #from dotenv import load_dotenv
-
 
 _deployed_env_ = os.environ.get("ENVIRONMENT", default=None)
 
@@ -50,14 +48,6 @@ def chat():
     # context = request.json.get('context', '')
     response = get_bot_response(message)
     return jsonify({'response': response})
-
-
-@app.route('/testdb')
-def testdb():
-    # Replace 'your_collection' with your actual collection name
-    doc = mongo.db.your_collection.find_one()
-    return jsonify(doc) if doc else "No document found in the database"
-
 
 
 @app.route("/auth/getuser/<email>", methods=['GET'])
