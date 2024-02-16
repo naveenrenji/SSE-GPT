@@ -10,8 +10,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import logoImage from "../images/logo.jpg";
-
+import logoImage from "../images/logo.webp";
 import { useEffect, useState } from "react";
 
 import { withAuthUser, useAuthUser, useSignOut } from "react-auth-kit";
@@ -50,7 +49,7 @@ function Header() {
             height="30"
             className="d-inline-block align-top"
           />{" "}
-          AIDA
+          VeritaSense
         </Navbar.Brand>
         <Navbar.Toggle />
         <Nav.Link className="app-navs px-2" href="/chatbot">

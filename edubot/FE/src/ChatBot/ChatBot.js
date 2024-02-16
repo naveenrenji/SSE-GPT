@@ -89,7 +89,7 @@ function ChatBot() {
 
   return (
     <div className="chat-container">
-      <h1 className="chat-title">Veritasense</h1>
+      {/* <h1 className="chat-title">Veritasense</h1> */}
       <div className="chat-messages">
         {messages.map((message, index) => (
           <div className={`chat-message-wrapper ${message.sender}`} key={index}>
